@@ -1,4 +1,4 @@
-![CI-Badge](https://github.com/fastai/fastai2/workflows/CI/badge.svg)
+[![CI-Badge](https://github.com/fastai/fastai2/workflows/CI/badge.svg)](https://github.com/fastai/fastai2/actions?query=workflow%3ACI) [![PyPI](https://img.shields.io/pypi/v/fastai2?color=blue&label=pypi%20version)](https://pypi.org/project/fastai2/#description)
 
 # Welcome to fastai v2
 > NB: This is still in early development. Use v1 unless you want to contribute to the next version of fastai
