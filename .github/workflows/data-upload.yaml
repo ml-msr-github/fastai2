@@ -20,8 +20,8 @@ jobs:
         parallel(untar_data, url_list, progress=True)
       shell: python
    
-   - name: upload data to actions artifacts
-     uses: actions/upload-artifact@v2
-     with:
-      name: fastai-data
-      path: ~/.fastai
+    - name: upload data to actions artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: fastai-data
+        path: ~/.fastai
