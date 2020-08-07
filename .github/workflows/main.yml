@@ -87,7 +87,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        nb: [0,1,2,3,4,5,6,7,8,9]
+        nb: ["[0-5]","[6-9]"]
     steps:
     - name: checkout contents of PR
       uses: actions/checkout@v2
@@ -106,14 +106,14 @@ jobs:
         
     - name: download data
       run: |
-        from fastai2.data.external import untar_data
+        from fastai2.data.external import untar_data, URLs
         from fastai2.torch_core import parallel
         from pathlib import Path
-        url_list = Path('test_data_urls.txt')
-        if url_list.exists():
-          with open(url_list, 'r') as f:
-            urls = [x.strip() for x in f.readlines()]
-          parallel(untar_data, urls, total=len(urls), progress=True)
+        urls = ['ADULT_SAMPLE','BIWI_SAMPLE','CAMVID_TINY','CIFAR','COCO_SAMPLE',
+                'COCO_TINY','IMDB','IMDB_SAMPLE','LSUN_BEDROOMS','ML_SAMPLE','MNIST',
+                'MNIST_SAMPLE','MNIST_TINY','PASCAL_2007','PETS']
+        url_list = [URLs.__dict__[k] for k in urls]
+        parallel(untar_data, url_list, total=len(urls), progress=True)
       shell: python
       
     - name: Test notebooks batch ${{matrix.nb}}
