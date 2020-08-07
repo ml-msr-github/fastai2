@@ -7,6 +7,7 @@ on:
 
 jobs:
   generateTOC:
+  if: 1 == 2
     name: TOC Generator
     runs-on: ubuntu-latest
     steps:
