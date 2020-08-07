@@ -1,0 +1,27 @@
+name: Upload Data Artifacts To Actions Manually
+on: 
+  workflow_dispatch: #allows repo admins to trigger this workflow from the Actions tab
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    container: fastdotai/fastai2 #this is defined here: https://github.com/fastai/docker-containers/blob/master/fastai2-build/Dockerfile
+    steps:
+
+    - name: download data
+      run: |
+        from fastai2.data.external import untar_data, URLs
+        from fastai2.torch_core import parallel
+        from pathlib import Path
+        urls = ['ADULT_SAMPLE','BIWI_SAMPLE','CAMVID_TINY','CIFAR','COCO_SAMPLE',
+                'COCO_TINY','IMDB_SAMPLE','LSUN_BEDROOMS','ML_SAMPLE',
+                'MNIST_SAMPLE','MNIST_TINY','PASCAL_2007','PETS']
+        url_list = [URLs.__dict__[k] for k in urls]
+        parallel(untar_data, url_list, progress=True)
+      shell: python
+   
+   - name: upload data to actions artifacts
+     uses: actions/upload-artifact@v2
+     with:
+      name: fastai-data
+      path: ~/.fastai
