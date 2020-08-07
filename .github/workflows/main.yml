@@ -87,7 +87,8 @@ jobs:
     container: fastdotai/fastai2 #this is defined here: https://github.com/fastai/docker-containers/blob/master/fastai2-build/Dockerfile
     steps:
 
-    - uses: actions/cache@v2
+    - name: check for cache hit
+      uses: actions/cache@v2
       id: cache
       with:
         path: ~/.fastai
@@ -107,6 +108,7 @@ jobs:
       shell: python
 
     - name: upload data to actions artifacts
+      if: steps.cache.outputs.cache-hit != 'true'
       uses: actions/upload-artifact@v2
       with:
         name: fastai-data
@@ -134,8 +136,16 @@ jobs:
       run: |
         pip install nbdev
         pip install -e .
-        
-    - name: download data
+    
+    - name: attempt to download with cache
+      uses: actions/cache@v2
+      id: cache
+      with:
+        path: ~/.fastai
+        key: 'fastai-test-data-v1'  
+ 
+    - name: download data if no cache hit
+      if: steps.cache.outputs.cache-hit != 'true'
       uses: actions/download-artifact@v2
       with:
         name: fastai-data
