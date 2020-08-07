@@ -87,7 +87,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        nb: ["[0-5]","[6-9]"]
+        nb: ['[0-2]','[3-5]','[6-9]']
     steps:
     - name: checkout contents of PR
       uses: actions/checkout@v2
@@ -118,5 +118,5 @@ jobs:
       
     - name: Test notebooks batch ${{matrix.nb}}
       run: |
-        nbdev_test_nbs --flags '' --n_workers 1 --timing True --fname "nbs/[0-9]${{matrix.nb}}*.ipynb"
+        nbdev_test_nbs --flags '' --n_workers 4 --timing True --fname "nbs/[0-9]${{matrix.nb}}*.ipynb"
   
