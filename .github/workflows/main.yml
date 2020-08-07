@@ -113,7 +113,7 @@ jobs:
                 'COCO_TINY','IMDB','IMDB_SAMPLE','LSUN_BEDROOMS','ML_SAMPLE','MNIST',
                 'MNIST_SAMPLE','MNIST_TINY','PASCAL_2007','PETS']
         url_list = [URLs.__dict__[k] for k in urls]
-        parallel(untar_data, url_list, total=len(urls), progress=True)
+        parallel(untar_data, url_list, total=len(url_list), progress=True)
       shell: python
       
     - name: Test notebooks batch ${{matrix.nb}}
